@@ -22,14 +22,6 @@ It is a project that generates a team profile html page that describes the manag
 
 Navigate to your local directory using git bash or terminal, then type "node index.js"
 
-# Contribution:
-
-k
-
-# Tests:
-
-k
-
 # License:
 
 This project is licensed under the MIT license, which you can read about [here](https://opensource.org/licenses/MIT).
