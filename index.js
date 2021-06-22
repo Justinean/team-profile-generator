@@ -5,8 +5,7 @@ const Intern = require('./lib/intern')
 const Engineer = require('./lib/engineer')
 let employee;
 let man;
-let int = [];
-let engi = [];
+let employees = [];
 
 function promptUser() {
     return inquirer.prompt([
@@ -83,7 +82,7 @@ async function engiPrompt() {
         }
     ]).then(engiAnswer => {
         const {name, id, email} = answer;
-        engi.push(new Engineer(name, id, email, engiAnswer.gitHub));
+        employees.push(new Engineer(name, id, email, engiAnswer.gitHub));
         newEmp();
     })
 }
@@ -99,7 +98,7 @@ async function intPrompt() {
         }
     ]).then(intAnswer => {
         const {name, id, email} = answer;
-        int.push(new Intern(name, id, email, intAnswer.school));
+        employees.push(new Intern(name, id, email, intAnswer.school));
         newEmp();
     })
 }
@@ -138,31 +137,32 @@ function generateHTML() {
                 </ul>
             </div>`;
 
-    for (i of engi) {
-        html += `\n<div class="card mr-5 mb-4" id="man" style="width: 16rem; border-top-right-radius: 7px; border-top-left-radius: 7px;">
-        <div class="card-body bg-primary" style="border-top-right-radius: 7px; border-top-left-radius: 7px;">
-            <h3 class="card-title text-white">${i.getName()}</h3>
-            <h4 class="card-text text-white">${i.getRole()}</h4>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID: ${i.getId()}</li>
-            <li class="list-group-item">Email: <a href="mailto: ${i.getEmail()}">${i.getEmail()}</a></li>
-            <li class="list-group-item" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px;">Github: <a href="https://www.github.com/${i.getGithub()}">${i.getGithub()}</a></li>
-        </ul>
-    </div>`
-    }
-    for (i of int) {
-        html += `\n<div class="card mr-5 mb-4" id="man" style="width: 16rem; border-top-right-radius: 7px; border-top-left-radius: 7px;">
-        <div class="card-body bg-primary" style="border-top-right-radius: 7px; border-top-left-radius: 7px;">
-            <h3 class="card-title text-white">${i.getName()}</h3>
-            <h4 class="card-text text-white">${i.getRole()}</h4>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID: ${i.getId()}</li>
-            <li class="list-group-item">Email: <a href="mailto: ${i.getEmail()}">${i.getEmail()}</a></li>
-            <li class="list-group-item" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px;">School: ${i.getSchool()}</li>
-        </ul>
-    </div>`
+    for (i of employees) {
+        if (i instanceof Engineer) {
+            html += `\n<div class="card mr-5 mb-4" id="man" style="width: 16rem; border-top-right-radius: 7px; border-top-left-radius: 7px;">
+            <div class="card-body bg-primary" style="border-top-right-radius: 7px; border-top-left-radius: 7px;">
+                <h3 class="card-title text-white">${i.getName()}</h3>
+                <h4 class="card-text text-white">${i.getRole()}</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID: ${i.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto: ${i.getEmail()}">${i.getEmail()}</a></li>
+                <li class="list-group-item" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px;">Github: <a href="https://www.github.com/${i.getGithub()}">${i.getGithub()}</a></li>
+            </ul>
+        </div>`
+        } else {
+            html += `\n<div class="card mr-5 mb-4" id="man" style="width: 16rem; border-top-right-radius: 7px; border-top-left-radius: 7px;">
+            <div class="card-body bg-primary" style="border-top-right-radius: 7px; border-top-left-radius: 7px;">
+                <h3 class="card-title text-white">${i.getName()}</h3>
+                <h4 class="card-text text-white">${i.getRole()}</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID: ${i.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto: ${i.getEmail()}">${i.getEmail()}</a></li>
+                <li class="list-group-item" style="border-bottom-left-radius: 7px; border-bottom-right-radius: 7px;">School: ${i.getSchool()}</li>
+            </ul>
+        </div>`
+        }
     }
     html += `\n</div>
     </main>
